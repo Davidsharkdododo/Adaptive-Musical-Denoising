@@ -63,14 +63,14 @@ This method uses an XGBoost regressor to analyse the audio environment via YAMNe
 1. **Generate the Training Data:**
    Run `pretrain.py` to create a dataset of synthetic mixtures and calculate the optimal decibel (dB) attenuation limit for each acoustic scenario.
    ```bash
-   python pretrain.py
+   python generate_hybrid_dataset.py
    ```
    *Output:* A `test.npy` feature file containing YAMNet embeddings mapped to their optimal DeepFilterNet attenuation limits.
 
 2. **Train the Controller:**
    Run `train.py` to train the XGBoost regressor on the generated dataset.
    ```bash
-   python train.py
+   python train_hybrid_controller.py
    ```
    *Output:* `test.json` (The trained XGBoost controller model).
 
@@ -80,14 +80,14 @@ This is the superior method for real-time instrument preservation. It modifies t
 1. **Prepare the Manifests and Features:**
    Run `prepare_dataset - Copy.py` to mix the clean audio and noise dynamically, slice them into segments, and extract the necessary DeepFilterNet features (`noisy_spec`, `erb_feat`, etc.).
    ```bash
-   python "prepare_dataset - Copy.py"
+   python prepare_dfn_dataset.py
    ```
    *Output:* JSONL manifest files and a cache of `.pt` feature tensors in the `outputs/` directory.
 
 2. **Run the Training Loop:**
    Execute `train_deepfilternet_finetune - Copy.py` to begin training the PyTorch model. The script is configured to use a Multi-Resolution Spectrogram loss.
    ```bash
-   python "train_deepfilternet_finetune - Copy.py"
+   python train_deepfilternet.py
    ```
    *Output:* Model checkpoints (`best.pt`, `last.pt`) saved in the run directory. These weights can be loaded directly into DeepFilterNet for real-time audio streams.
 
@@ -100,14 +100,14 @@ To test how well your new model preserves music compared to a baseline, use the 
 1. **Generate the Test Scenarios:**
    Run `make sample.py` to generate a rigorous dataset featuring alternating speech and music segments overlaying continuous background noise.
    ```bash
-   python "make sample.py"
+   python generate_benchmark_dataset.py
    ```
    *Output:* `data/input_clean/` (Target ground truth) and `data/input_noisy/` (Files to be passed through your denoiser).
 
 2. **Run the Benchmark Metrics:**
    After processing the `input_noisy/` files through your trained model (saving the outputs to `data/output_clean/`), run the benchmark script to calculate the Frechet Audio Distance (FAD), STOI, SNR, and SI-SDR.
    ```bash
-   python generated_benchmark_metrics.py
+   python evaluate_metrics.py
    ```
    *Output:* A comprehensive JSON report (`evaluation_metrics.json`) and a comparative boxplot (`evaluation_metrics_boxplot.png`) demonstrating the model's behaviour and preservation quality.
 
