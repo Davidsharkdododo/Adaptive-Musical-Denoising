@@ -4,7 +4,7 @@ full paper:  [paper.pdf](https://github.com/user-attachments/files/29191559/pape
 
 <div align="center">
 
-# 🎵 Adaptive Musical Denoising
+# Adaptive Musical Denoising
 **A Comparative Evaluation of Hybrid and Fine-Tuned DeepFilterNet Architectures**
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)]()
@@ -13,7 +13,7 @@ full paper:  [paper.pdf](https://github.com/user-attachments/files/29191559/pape
 
 </div>
 
-## 📖 Overview
+## Overview
 Standard noise cancellation models are often too aggressive, treating musical instruments as background noise and suppressing them during real-time streaming or communications. This repository provides a suite of tools to train and evaluate noise suppression models capable of distinguishing unwanted environmental noise from desirable musical content. 
 
 The toolset focuses strictly on the **real-time processing** capabilities of DeepFilterNet, allowing users to train a model that maintains low latency (sub-40ms) without relying on heavy graphical interfaces. 
@@ -24,7 +24,7 @@ This project explores two primary denoising methodologies:
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 Install the required dependencies. Ensure you have a compatible PyTorch version installed for your hardware environment.
 
